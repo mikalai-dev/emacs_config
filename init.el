@@ -1,3 +1,8 @@
+(setq custom-file
+      (concat (file-name-as-directory user-emacs-directory)
+              "custom.el"))
+(load custom-file 'noerror)
+
 (defvar efs/default-font-size 120)
 (defvar efs/default-variable-font-size 120)
 
@@ -128,10 +133,7 @@
   :commands command-log-mode)
 
 (use-package doom-themes
-  ;;:init (load-theme 'doom-palenight t))
   :init (load-theme 'doom-gruvbox t))
-  ;;:init (load-theme 'doom-wilmersdorf t))
-  ;;::init (load-theme 'doom-laserwave t))
 
 (use-package all-the-icons)
 (require 'unicode-fonts)
@@ -553,19 +555,5 @@ ad-return-value))))
   (interactive)
   (if (eq (frame-parameter nil 'fullscreen) 'fullboth)
       (my-non-fullscreen)
-    (my-fullscreen)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "ff24d14f5f7d355f47d53fd016565ed128bf3af30eb7ce8cae307ee4fe7f3fd0" "1f292969fc19ba45fbc6542ed54e58ab5ad3dbe41b70d8cb2d1f85c22d07e518" "5f128efd37c6a87cd4ad8e8b7f2afaba425425524a68133ac0efd87291d05874" default))
- '(package-selected-packages
-   '(yaml-mode company-ansible ansible elfeed-org elfeed helm helm-mode-manager lsp-mode emacsql-sqlite emacsql-sqlite-module org-roam-ui org-roam lua-mode rustic which-key vterm visual-fill-column use-package unicode-fonts typescript-mode twittering-mode rust-mode rainbow-delimiters pyvenv python-mode pdf-tools org-bullets no-littering neotree lsp-ui lsp-ivy ivy-rich ivy-prescient helpful go-mode go-errcheck general forge evil-nerd-commenter evil-collection eterm-256color eshell-git-prompt elfeed-goodies doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles deft dap-mode counsel-projectile company-box command-log-mode auto-package-update all-the-icons-dired)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+    (my-fullscreen))
+)
