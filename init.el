@@ -361,6 +361,12 @@
   (setq-default py-indent-tabs-mode t)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 
+(use-package lsp-rust
+   :hook (rust-mode . lsp-deferred))
+
+ (use-package cargo-mode
+   :hook (rust-mode . cargo-minor-mode))
+
 (use-package pyvenv
   :after python-mode
   :config
