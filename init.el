@@ -19,13 +19,13 @@
 ;;(setq use-package-always-ensure t)
 
 ;; (use-package auto-package-update
-;;  :custom
-;;  (auto-package-update-interval 7)
-;;  (auto-package-update-prompt-before-update t)
-;;  (auto-package-update-hide-results t)
-;;  :config
-;;  (auto-package-update-maybe)
-;;  (auto-package-update-at-time "09:00"))
+;;   :custom
+;;   (auto-package-update-interval 7)
+;;   (auto-package-update-prompt-before-update t)
+;;   (auto-package-update-hide-results t)
+;;   :config
+;;   (auto-package-update-maybe)
+;;   (auto-package-update-at-time "09:00"))
 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
@@ -55,6 +55,33 @@
   (get-buffer-create "*Messages*")
   (load-file "~/.emacs.d/init.el"))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; eshell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package eshell
+  :init
+  (defun my/eshell-buffer-name (dir)
+    (format "*eshell:%s*" (expand-file-name dir)))
+
+  (defun my/eshell-rename-buffer nil
+    (rename-buffer
+     (generate-new-buffer-name (my/eshell-buffer-name default-directory))))
+
+  (defun my/eshell-here (&optional arg)
+    (interactive "P")
+    (let* ((dir (file-name-directory
+                 (or (buffer-file-name)
+                     default-directory)))
+           (eshell-buffer-name (my/eshell-buffer-name dir)))
+      (if arg
+          ;; always create a new window with a prefix argument
+          (eshell t)
+        (let ((buffer (get-buffer eshell-buffer-name)))
+          (if buffer
+              (pop-to-buffer buffer)
+            ;; create a new buffer if it doesn't already exist
+            (eshell t))))))
+  :bind ("C-c e" . my/eshell-here)
+  :hook (eshell-directory-change . my/eshell-rename-buffer))
+
 ;;;;;;;;;;;;;;;;;; go-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package go-mode
   :custom
@@ -66,6 +93,11 @@
              (setq-local whitespace-style
                          (delq 'tabs whitespace-style)))))
 
+;;;;;;;;;;;;;;;;; rust-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package rust-mode
+  :mode "\\.rs\\'"
+  :custom
+  (rust-format-on-save t))
 
 ;;;;;;;;;;;;;;;;; dockerfile-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package dockerfile-mode
