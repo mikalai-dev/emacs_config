@@ -102,10 +102,39 @@
 ;;;;;;;;;;;;;;;;; dockerfile-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package dockerfile-mode
 	  :mode "Dockerfile\\'")
-;;;;;;;;;;;;;;;;; docker-compose-mode ;;;;;;;;;;;;;;;;;;;;;;;;s
+;;;;;;;;;;;;;;;;; docker-compose-mode ;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package docker-compose-mode :ensure t)
 
-;; Final settings
+;;;;;;;;;;;;;;;;; org-roam-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/.roam")
+  (org-roam-completion-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)
+         :map org-roam-dailies-map
+         ("Y" . org-roam-dailies-capture-yesterday)
+         ("T" . org-roam-dailies-capture-tomorrow))
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
+  :config
+  (require 'org-roam-dailies) ;; Ensure the keymap is available
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry
+           "* %?"
+           :if-new (file+head "%<%Y>/%<%m>/%<%d-%m-%Y>.org"
+                              "#+title: %<%d-%m-%Y>\n"))))
+  (org-roam-db-autosync-mode))
+
+;;;;;;;;;;;;;;;;; Final settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (electric-pair-mode 1)
 (setq electric-pair-preserve-balance nil)
 (fset 'yes-or-no-p 'y-or-n-p)
