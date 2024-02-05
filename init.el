@@ -134,7 +134,8 @@
   (require 'org-roam-dailies) ;; Ensure the keymap is available
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry
-           "* %?"
+           ;; %?"
+           (file "~/.roam/templates/daily.org")
            :if-new (file+head "%<%Y>/%<%m>/%<%d-%m-%Y>.org"
                               "#+title: %<%d-%m-%Y>\n"))))
   (org-roam-db-autosync-mode))
