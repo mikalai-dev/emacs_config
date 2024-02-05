@@ -105,6 +105,12 @@
 ;;;;;;;;;;;;;;;;; docker-compose-mode ;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package docker-compose-mode :ensure t)
 
+;;;;;;;;;;;;;;;;; org-bullets ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package org-bullets :ensure t
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
 ;;;;;;;;;;;;;;;;; org-roam-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package org-roam
