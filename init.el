@@ -34,7 +34,7 @@
   :config (counsel-mode 1))
 
 (use-package doom-themes
-  :init (load-theme 'doom-tokyo-night t))
+  :init (load-theme 'doom-material-dark t))
 
 ;; Keybindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
